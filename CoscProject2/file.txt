@@ -1,0 +1,4 @@
+Client 1 "Alex Brittain" "Business" 2
+Project 2 50 10000.00 4000.00 3
+Employee 3 "Joe Smith" "Senior Developer" 32 118000.00 8 10
+Manager 4 "Jane Doe" "Product Manager" 27 80000.00 2 6 1 3
