@@ -10,6 +10,12 @@ using std::setw;
 #include <sstream>
 
 void BudgetAnalysis(double status, double budget, double totalSpent) {
+	cout << '\n';
+	if (status == 0) {
+		std::cout << "Your project has not been started yet. Add some employees if you haven't already.\n" << std::endl;
+		return;
+	}
+
 	double projectedSpent = (totalSpent / (status / 100));
 	double difference = projectedSpent - budget;
 
@@ -22,6 +28,7 @@ void BudgetAnalysis(double status, double budget, double totalSpent) {
 	else {
 		std::cout << "Your spending is on track with the budget." << std::endl;
 	}
+	cout << '\n';
 }
 
 void Client::printSubHeader() {
@@ -82,14 +89,12 @@ void Client::printSubmenu() {
 	cout << setfill('=') << setw(50) << "\n";
 	// once we get authenticated, we offer some options.
 	choice = -1; // set not equal to 4
+	std::vector<ILoggable*> projects; // option2 
 	while (choice != 5) {
-
-
 		printUserOptions();
 		choice = getChoice("Enter your option: ", 5);
 
 		Project* proj = new Project(); // option 1
-		std::vector<ILoggable*> projects; // option2 
 		switch (choice) {
 			case 1:
 				// create a project
@@ -98,10 +103,11 @@ void Client::printSubmenu() {
 				client->addProject(proj->getId());
 				CompanyLog::addToLog(client);
 				WriteToLog(client);
-			continue;
+				continue;
 			case 2:
 				if (client->getProjects().size() > 0) {
 					projects = CompanyLog::getInstancesFromIds(client->getProjects());
+					cout << "\nYou have " << client->getProjects().size() << " projects:\n";
 					for (int i = 0; i < projects.size(); i++) {
 						Project* project = static_cast<Project*>(projects[i]);
 						cout << i + 1 << ". " << project->getName() << " Status: " << project->getStatus() << "%" << '\n';
@@ -109,10 +115,20 @@ void Client::printSubmenu() {
 				}
 				else 
 					cout << "Client doesn't have any projects\n";
-
+				break;
 			case 3:
 			case 4:
-				
+				if (projects.size() > 0) {
+					int projCoice = getChoice("\nSelect a project from the list from option 2: ", projects.size());
+					Project* project = static_cast<Project*>(projects[projCoice - 1]);
+					cout << "\nRunning budget analysis on " << project->getName() << "!\n";
+
+					BudgetAnalysis(project->getStatus(), project->getBudget(), project->getTotalSpent());
+				}
+				else {
+					cout << "\nDo you have any projects? Run option 2 first.\n";
+				}
+
 				break;
 		}
 	}
