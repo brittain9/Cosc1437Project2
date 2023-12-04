@@ -26,6 +26,8 @@ public:
     static std::vector<ILoggable*> getLogs() { return logs; }
     static void addToLog(ILoggable* add);
 
+    static void removeFromLog(int id);
+
     void readLines();
     void parseLines(); // fill up our vectors from the txt file
 

@@ -73,12 +73,30 @@ void Employee::printSubmenu() {
 		case 1: 
 			{
 				projectsList = CompanyLog::getInstancesOfType("Project");
+				std::vector<Project*> currProjs;
+				// get all our projects and create a vector for this employ's projs
+
 				for (int i = 0; i < projectsList.size(); i++) {
 					Project* p = static_cast<Project*>(projectsList[i]);
-					{
-						std::vector<int> employeesOnProj = p->getEmployees();
-						// we need to add employees to a proj
+					if (p->getStatus() >= 100) continue; // this project is done, no need to work on it
+					std::vector<int> employeesOnProj = p->getEmployees();
+					// loop through all projects and all ids of projects to see if our current employee is in there
+					for (int j = 0; j < employeesOnProj.size(); j++) {
+						if (employeesOnProj[j] == employee->getId()) {
+							// is so add that project to the projects
+							currProjs.push_back(p);
+						}
 					}
+				}
+				Project* workingOn = nullptr;
+				// print out the projects
+				if (currProjs.size() > 0) {
+					cout << "\nCurrent projects you are assigned to:\n";
+					for (int i = 0; i < currProjs.size(); i++) {
+						cout << i + 1 << ". " << currProjs[i]->getName() << " | Status: " << currProjs[i]->getStatus() << '\n';
+					}
+					int projChoice = getChoice("Enter the number of the project you are working on: ", currProjs.size());
+					workingOn = currProjs[projChoice - 1];
 				}
 
 				int hours = getInput<int>("Enter the hours you worked this week: ");
@@ -89,6 +107,20 @@ void Employee::printSubmenu() {
 				else if (hours > 40) employee->setPerformance(employee->getPerformance() + 1);
 				else employee->setPerformance(employee->getPerformance() - 1);
 				cout << "\nYou have a performance score of " << employee->getPerformance() << "!\n";
+
+				if (workingOn != nullptr) {
+					// every project is going to take a constant 1000 hours of work.
+					double addedToStatus = (hours / 1000.0) * 100; // this a percentage
+					int newStatus = workingOn->getStatus() + (int)addedToStatus;
+					if (newStatus > 100) newStatus = 100;
+
+					workingOn->setStatus(newStatus);
+					cout << "New status: " << workingOn->getStatus() << '\n';
+
+					CompanyLog::addToLog(workingOn);
+					WriteToLog(workingOn);
+				}
+
 				CompanyLog::addToLog(employee);
 				WriteToLog(employee);
 			}

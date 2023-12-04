@@ -149,6 +149,47 @@ void CompanyLog::addToLog(ILoggable* add) {
         logs.push_back(add);
     }
 }
+void CompanyLog::removeFromLog(int id) {
+    // Remove the object from the vector log
+    for (size_t i = 0; i < logs.size(); ++i) {
+        if (logs[i]->getId() == id) {
+            logs.erase(logs.begin() + i);
+            break;
+        }
+    }
+
+    // Remove the object from the file log
+    std::string line;
+    std::ifstream fileIn("file.txt");
+    std::ostringstream temp;
+    bool found = false;
+
+    while (std::getline(fileIn, line)) {
+        std::istringstream iss(line);
+        std::string currentType;
+        int currentId;
+
+        if (!(iss >> currentType >> currentId)) {
+            break; // Error in reading the line
+        }
+
+        // If the ID matches, skip the line (do not write it to the temp buffer)
+        if (currentId == id) {
+            found = true;
+        }
+        else {
+            // Keep the line as it is
+            temp << line << "\n";
+        }
+    }
+
+    fileIn.close();
+
+    // Write the new content to the file
+    std::ofstream fileOut("file.txt");
+    fileOut << temp.str();
+    fileOut.close();
+}
 
 std::vector<ILoggable*> CompanyLog::getInstancesOfType(std::string type) {
     std::vector<ILoggable*> result;

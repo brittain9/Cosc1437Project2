@@ -1,6 +1,6 @@
 Client 1 "Alex Brittain" "Business" 2 414780
 Project 2 "Company Website" 50 10000.00 4000.00 3
-Employee 3 "Joe Smith" "Senior Developer" 32 118000.00 8 10
+Employee 3 "Joe Smith" "Senior Developer" 32 118000 8 14
 Manager 4 "Jane Doe" "Product Manager" 27 80000 2 6 1 3 205807
 Client 34924 "New Test Client" "Test Industry" 19054 38659 44754
 Project 19054 "Test1" 0 100 0 
@@ -10,7 +10,5 @@ Client 97137 "Joe" "Mama" 141820 246418 56148
 Project 141820 "alsd" 0 4214 0 
 Project 246418 "kfasikkfsaidkikasfd" 0 2.53562e+07 0 205807
 Project 56148 "aSFJNjasfkijlnasfkijl" 0 4252 0 
-Project 414780 "Joe's Bakery" 0 9.04913e+06 0 104842 205807 3
-Employee 205807 "Paul Jenkins" ""Junior Dev"" 23 70000 0 -1
+Project 414780 "Joe's Bakery" 100 9.04913e+06 0 104842 205807 3
 Manager 348570 "Manager Test1" "Test position 1" 99 1e+07 0 -1 2 104842
-Employee 104842 "George Smith" "AI tech" 54 200000 0 23

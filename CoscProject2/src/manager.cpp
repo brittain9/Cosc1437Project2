@@ -42,7 +42,7 @@ void PerformanceReview(double history, double performance) {
 	else if (history > 3) {
 		std::cout << "\nThis employee has some experience with us.";
 	}
-	cout << setfill('=') << setw(50) << "\n\n";
+	cout << '\n' << setfill('=') << setw(50) << "\n\n";
 }
 
 void Manager::printSubHeader() {
@@ -139,6 +139,17 @@ void Manager::printSubmenu() {
 				cout << "Manager doesn't manager any employees\n";
 			break;
 		case 3:
+			if (employees.size() > 0) {
+				int employCoice = getChoice("\nSelect a employee from the list from option 2 to fire: ", employees.size());
+				Employee* employee = static_cast<Employee*>(employees[employCoice - 1]);
+				CompanyLog::removeFromLog(employee->getId());
+				cout << "\nFired " << employee->getName() << "!\n";
+
+			}
+			else {
+				cout << "\nDo you have any employees? Run option 2 first.\n";
+			}
+			break;
 		case 4:
 			if (employees.size() > 0) {
 				int employCoice = getChoice("\nSelect a employee from the list from option 2: ", employees.size());
@@ -151,6 +162,17 @@ void Manager::printSubmenu() {
 				cout << "\nDo you have any employees? Run option 2 first.\n";
 			}
 		case 5:
+			// give a bonus.
+			if (employees.size() > 0) {
+				int employCoice = getChoice("\nSelect a employee from the list from option 2: ", employees.size());
+				Employee* employee = static_cast<Employee*>(employees[employCoice - 1]);
+				double bonus = getInput<double>("Enter the bonus to give that employee: ");
+				employee->setSalary(employee->getSalary() + bonus);
+				cout << "\nGave " << employee->getName() << " a " << bonus << " bonus!\n";
+			}
+			else {
+				cout << "\nDo you have any employees? Run option 2 first.\n";
+			}
 			break;
 		case 6:
 			break;
