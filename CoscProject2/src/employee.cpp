@@ -3,6 +3,8 @@
 using std::setfill;
 using std::setw;
 
+#include <sstream>
+
 #include "menu.h"
 
 void Employee::printSubHeader() {
@@ -30,4 +32,15 @@ void Employee::printSubmenu() {
 		case 2:
 			break;
 	}
+}
+
+void Employee::createNew() {
+	cout << "implement\n";
+}
+
+std::string Employee::createLogString() {
+	std::ostringstream oss;
+	oss << getClassName() << " " << getId() << " \"" << getName() << "\" \"" << getPosition() << "\" " << getAge() << " " << getSalary() << " " << getHistory() << " " << getPerformance();
+
+	return oss.str();
 }

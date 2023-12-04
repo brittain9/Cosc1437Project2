@@ -5,24 +5,35 @@
 #include <vector>
 #include <string>
 #include "ILoggable.h"
+#include "client.h"
+#include "employee.h"
+#include "manager.h"
+#include "project.h"
+
+void WriteToLog(ILoggable* toLog);
 
 class CompanyLog {
-    std::fstream file;
+    static std::fstream file;
+
+    //read lines will get our lines
     std::vector<std::string> lines;
 
-    std::vector<ILoggable*> logs;
-
+    // parse lines will fill up our vector
+    static std::vector<ILoggable*> logs;
 
 public:
     CompanyLog(const std::string& filename);
     ~CompanyLog();
 
     std::vector<std::string> getLines() { return lines; }
-    std::vector<ILoggable*> getLogs() { return logs; }
+    static std::vector<ILoggable*> getLogs() { return logs; }
+    static void addToLog(ILoggable* add);
 
     void readLines();
     void parseLines(); // fill up our vectors from the txt file
-    void writeToFile(const std::string& data);
+
+    static std::vector<ILoggable*> getInstancesFromIds(std::vector<int> ids);
+    static std::vector<ILoggable*> getInstancesOfType(std::string type);
 };
 
 #endif

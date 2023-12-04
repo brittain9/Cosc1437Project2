@@ -1,4 +1,12 @@
 Client 1 "Alex Brittain" "Business" 2
-Project 2 50 10000.00 4000.00 3
+Project 2 "Company Website" 50 10000.00 4000.00 3
 Employee 3 "Joe Smith" "Senior Developer" 32 118000.00 8 10
 Manager 4 "Jane Doe" "Product Manager" 27 80000.00 2 6 1 3
+Client 34924 "New Test Client" "Test Industry" 19054 38659 44754
+Project 19054 "Test1" 0 100 0 
+Project 38659 "Test2" 0 200 0 
+Project 44754 "Test3" 0 20000.6 0 
+Client 97137 "Joe" "Mama" 141820 246418 56148
+Project 141820 "alsd" 0 4214 0 
+Project 246418 "kfasikkfsaidkikasfd" 0 2.53562e+07 0 
+Project 56148 "aSFJNjasfkijlnasfkijl" 0 4252 0 

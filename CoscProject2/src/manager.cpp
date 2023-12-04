@@ -3,6 +3,8 @@
 using std::setfill;
 using std::setw;
 
+#include <sstream>
+
 #include "menu.h"
 
 
@@ -34,4 +36,22 @@ void Manager::printSubmenu() {
 	case 3:
 		break;
 	}
+}
+void Manager::createNew() {
+	cout << "implement\n";
+}
+
+std::string Manager::createLogString() {
+	std::ostringstream oss;
+	oss << getClassName() << " " << getId() << " \"" << getName() << "\" \"" << getPosition() << "\" " << getAge() << " " << getSalary() << " " << getHistory() << " " << getPerformance() << " " << static_cast<int>(getLevel()) << " ";
+
+	for (int i = 0; i < employeesIds.size(); ++i) {
+		oss << employeesIds[i];
+
+		// Add a space after each id, except the last one
+		if (i != employeesIds.size() - 1) {
+			oss << " ";
+		}
+	}
+	return oss.str();
 }

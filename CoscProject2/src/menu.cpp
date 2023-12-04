@@ -1,16 +1,27 @@
 #include "menu.h"
 
+#include <iomanip>
+using std::setfill;
+using std::setw;
+
 void printMenuHeader() {
 	cout << '\n' << setfill('=') << setw(50) << "\n";
 	cout << setfill(' ') << setw(20) << "Welcome to Alex's Company Project Management System!" << std::endl;
 	cout << setfill('=') << setw(50) << "\n\n";
 }
 
-std::string getString(std::string prompt) {
-    cout << prompt;
-    std::string str1;
-    std::getline(std::cin, str1);
-    return str1;
+std::string getString(const std::string& prompt) {
+    std::string value;
+    while (true) {
+        std::cout << prompt;
+        std::getline(std::cin, value);
+        if (value.empty()) {
+            std::cout << "Invalid input, please try again." << std::endl;
+        }
+        else {
+            return value;
+        }
+    }
 }
 
 int getChoice(std::string prompt, int maxOptions) {

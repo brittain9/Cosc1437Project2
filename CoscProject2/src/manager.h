@@ -21,7 +21,7 @@ class Manager : public Employee
 
 public:
 	Manager(){}
-	Manager(int id, std::string name, std::string position, int age, double salary, int history, int performance, level_t level, vector<int> employeeIds) : Employee(id, name, position, age, salary, history, performance), level(level), employeesIds(employeesIds) {}
+	Manager(int id, std::string name, std::string position, int age, double salary, int history, int performance, level_t level, vector<int> employeeIds) : Employee(id, name, position, age, salary, history, performance), level(level), employeesIds(employeeIds) {}
 
 	std::string getClassName() override { return "Manager"; }
 
@@ -33,6 +33,9 @@ public:
 	void printSubmenu() override;
 	void printOptions() override;
 	void printSubHeader() override;
+
+	void createNew() override;
+	std::string createLogString() override;
 
 	// hire and fire
 	// pay bonuses

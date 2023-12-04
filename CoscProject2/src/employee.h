@@ -39,7 +39,9 @@ public:
 	void printSubmenu() override;
 	void printOptions() override;
 	void printSubHeader() override;
-	//void AddtoLog() override;
+
+	void createNew() override;
+	std::string createLogString() override;
 };
 
 #endif
