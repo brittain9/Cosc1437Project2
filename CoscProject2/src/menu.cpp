@@ -39,6 +39,7 @@ int getChoice(std::string prompt, int maxOptions) {
         catch (const std::invalid_argument& e) {} // loop will continue if input is invalid
 
         if (choice < 1 || choice > maxOptions) {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Enter an option between 1 and " << maxOptions << ": ";
         }
     }

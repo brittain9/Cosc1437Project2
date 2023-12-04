@@ -2,20 +2,11 @@
 #include "menu.h"
 #include "company_log.h"
 
-/*
-TODO:
-Figure out a way to 
-*/
-
 int main() {
 	bool running = true;
 	CompanyLog* log = new CompanyLog("file.txt");
 	log->readLines();
 	log->parseLines();
-
-	for (auto a : log->getLogs()) {
-		cout << a->createLogString() << '\n';
-	}
 
 	do
 	{

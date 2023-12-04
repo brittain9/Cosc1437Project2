@@ -44,6 +44,7 @@ public:
 	void setBudget(double budget) { this->budget = budget; }
 	void setTotalSpent(double totalSpent) { this->totalSpent = totalSpent; }
 	void setEmployees(const std::vector<int>& employeesIds) { this->employeesIds = employeesIds; }
+	void addEmployee(int employeeId) { employeesIds.push_back(employeeId); }
 
 	void createNew() override;
 	std::string createLogString() override;

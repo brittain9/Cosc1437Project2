@@ -10,9 +10,11 @@ using std::setw;
 #include <sstream>
 
 void BudgetAnalysis(double status, double budget, double totalSpent) {
-	cout << '\n';
+	cout << '\n' << setfill('=') << setw(50) << "\n";
 	if (status == 0) {
 		std::cout << "Your project has not been started yet. Add some employees if you haven't already.\n" << std::endl;
+		cout << setfill('=') << setw(50) << "\n\n";
+
 		return;
 	}
 
@@ -28,7 +30,7 @@ void BudgetAnalysis(double status, double budget, double totalSpent) {
 	else {
 		std::cout << "Your spending is on track with the budget." << std::endl;
 	}
-	cout << '\n';
+	cout << setfill('=') << setw(50) << "\n\n";
 }
 
 void Client::printSubHeader() {
@@ -43,10 +45,11 @@ void Client::printOptions() { // get client, authentcation
 	cout << "3. Go back\n\n";
 }
 
-void printUserOptions() {
+#define CLIENT_OPTIONS 5
+void Client::printUserOptions() {
 	cout << "\n1. Add a new project\n";
 	cout << "2. View existing projects\n";
-	cout << "3. Add employees to a project\n"; // this needs to be done after our performance review feature
+	cout << "3. Add employee to a project\n"; // this needs to be done after our performance review feature
 	// get recommended employees? top performers?
 	cout << "4. Run a budget analysis on a project\n";
 	cout << "5. Return to main menu\n\n";
@@ -82,17 +85,18 @@ void Client::printSubmenu() {
 				cout << "\nNo existing clients. Please create a new client.\n";
 			break;
 		case 3:
-			break;
+			return;
 	}
 	cout << '\n' << setfill('=') << setw(50) << "\n";
 	cout << setfill(' ') << setw(20) << "Welcome " << client->getName() << "!" << std::endl;
 	cout << setfill('=') << setw(50) << "\n";
 	// once we get authenticated, we offer some options.
-	choice = -1; // set not equal to 4
+	choice = -1; // set not equal to CLIENT_OPTIONS
 	std::vector<ILoggable*> projects; // option2 
-	while (choice != 5) {
+	std::vector<ILoggable*> employeesList; // option 3 to add employees
+	while (choice != CLIENT_OPTIONS) {
 		printUserOptions();
-		choice = getChoice("Enter your option: ", 5);
+		choice = getChoice("Enter your option: ", CLIENT_OPTIONS);
 
 		Project* proj = new Project(); // option 1
 		switch (choice) {
@@ -116,7 +120,46 @@ void Client::printSubmenu() {
 				else 
 					cout << "Client doesn't have any projects\n";
 				break;
-			case 3:
+			case 3: 
+				{
+				if (projects.empty()) {
+					cout << "Run option 2 to view projects first\n";
+					break;
+				}
+				int ProjChoice = getInput<int>("Please select a project from option 2: ");
+
+				Project* selected = static_cast<Project*>(projects[ProjChoice - 1]);
+
+				employeesList = CompanyLog::getInstancesOfType("Employee");
+				for (int i = 0; i < employeesList.size(); i++) {
+					// check if they already are working on project
+					for (int j = 0; j < selected->getEmployees().size(); j++) {
+						if (static_cast<Employee*>(employeesList[i])->getId() == selected->getEmployees()[j]) {
+							employeesList.erase(employeesList.begin() + i);
+							i--;
+							break;
+						}
+						// the employee id is in the project
+					}
+				}
+				if (employeesList.size() > 0) {
+					for (int i = 0; i < employeesList.size(); i++) {
+						Employee* e = static_cast<Employee*>(employeesList[i]);
+
+						cout << i + 1 << ". " << e->getName() << " | Performance score: " << e->getPerformance() << '\n';
+					}
+					int empChoice = getInput<int>("Please select the employee to add: ");
+					selected->addEmployee(static_cast<Employee*>(employeesList[empChoice - 1])->getId());
+					CompanyLog::addToLog(selected);
+					WriteToLog(selected);
+					cout << "\nAdded " << static_cast<Employee*>(employeesList[empChoice - 1])->getName() << " to project" << selected->getName() << ".\n";
+				}
+				else {
+					cout << "No employees to add.\n";
+					continue;
+				}
+				}
+				break;
 			case 4:
 				if (projects.size() > 0) {
 					int projCoice = getChoice("\nSelect a project from the list from option 2: ", projects.size());

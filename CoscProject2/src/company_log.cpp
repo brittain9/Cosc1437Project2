@@ -1,6 +1,9 @@
 #include "company_log.h"
 
-
+#include "client.h"
+#include "employee.h"
+#include "manager.h"
+#include "project.h"
 
 std::fstream CompanyLog::file;
 std::vector<ILoggable*> CompanyLog::logs;

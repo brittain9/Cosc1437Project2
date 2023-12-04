@@ -10,6 +10,7 @@ class Client : public User, public ILoggable {
 
 	void printOptions() override;
 	void printSubHeader() override;
+	void printUserOptions() override;
 public:
 	Client() {}
 

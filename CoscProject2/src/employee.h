@@ -20,7 +20,13 @@ class Employee : public User, public ILoggable
 	int performance; // what does this mean? like performance of 10 represents what? maybe an enum here. Maybe two other vars for time worked and billable hours?
 public:
 	Employee() {}
-	Employee(int id, std::string name, std::string position, int age, double salary, int history, int performance) :  ILoggable(id), User(name), position(position), age(age), salary(salary), history(history), performance(performance) {}
+
+	Employee(int id, std::string name, std::string position, int age, double salary, int history, int performance) 
+		: ILoggable(id), User(name), position(position), age(age), salary(salary), history(history), performance(performance) {}
+
+	// for new employees
+	Employee(std::string name, std::string position, int age, double salary) 
+		: ILoggable(), User(name), position(position), age(age), salary(salary), history(0), performance(0) {}
 
 	std::string getClassName() override { return "Employee"; }
 
@@ -39,6 +45,7 @@ public:
 	void printSubmenu() override;
 	void printOptions() override;
 	void printSubHeader() override;
+	void printUserOptions() override;
 
 	void createNew() override;
 	std::string createLogString() override;

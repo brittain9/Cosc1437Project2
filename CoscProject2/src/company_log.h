@@ -5,10 +5,7 @@
 #include <vector>
 #include <string>
 #include "ILoggable.h"
-#include "client.h"
-#include "employee.h"
-#include "manager.h"
-#include "project.h"
+
 
 void WriteToLog(ILoggable* toLog);
 

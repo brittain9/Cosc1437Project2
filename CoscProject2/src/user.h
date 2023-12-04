@@ -17,6 +17,7 @@ public:
 	virtual void printSubmenu() = 0;
 	virtual void printSubHeader() = 0;
 	virtual void printOptions() = 0;
+	virtual void printUserOptions() = 0;
 };
 
 
